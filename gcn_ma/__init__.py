@@ -19,7 +19,7 @@ from gcn_ma.gcn_layer import GCN, GCNWithNAE
 from gcn_ma.lstm_updater import LSTMWeightUpdater, GCNLSTMModel
 from gcn_ma.attention import MultiHeadAttention, LocalTemporalAttention
 from gcn_ma.model import LinkPredictor, LinkPredictionDataset
-from gcn_ma.trainer import GCN_MA_Model, GCN_MA_Trainer
+from gcn_ma.trainer import GCN_MA, GCN_MA_Trainer
 
 __version__ = "1.0.0"
 __all__ = [
