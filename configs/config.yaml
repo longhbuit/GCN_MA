@@ -1,0 +1,50 @@
+# GCN_MA Configuration
+
+model:
+  name: "GCN_MA"
+  seed: 42
+
+# NRNAE parameters
+nrnae:
+  beta: 0.8  # Weight for aggregation effect (0.7-0.9 optimal)
+
+# GCN parameters
+gcn:
+  input_dim: 128
+  hidden_dim: 128
+  output_dim: 128
+  dropout: 0.3
+
+# LSTM parameters
+lstm:
+  hidden_dim: 128
+  num_layers: 1
+
+# Multi-head Attention parameters
+attention:
+  num_heads: 8
+  dropout: 0.1
+
+# Training parameters
+training:
+  epochs: 100
+  batch_size: 1  # Graph-level, so batch_size=1
+  learning_rate: 0.001
+  weight_decay: 0.0005
+  early_stopping_patience: 20
+  device: "cuda"  # or "cpu"
+
+# Datasets
+data:
+  name: "CollegeMsg"  # Change to test different datasets
+  data_dir: "./data"
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+  num_snapshots: 10  # Number of time snapshots to use
+
+# Evaluation
+evaluation:
+  metrics: ["auc", "ap"]
+  save_results: true
+  results_dir: "./results"
