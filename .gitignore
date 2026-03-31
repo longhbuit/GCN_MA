@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+*.egg-info/
+
+# Data
+data/raw/
+data/processed/
+checkpoints/
+*.pkl
+
+# IDE
+.idea/
+
+# Results
+results/*.json
+
+# OS
+.DS_Store

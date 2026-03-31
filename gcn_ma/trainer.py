@@ -259,11 +259,16 @@ class GCN_MA_Trainer:
             next_graph = train_graphs[t + 1]
             
             # Positive edges (new edges in next snapshot)
+            # Only consider edges where both endpoints exist in current graph
             new_edges = []
             prev_edges = set(graph.edges())
+            nodes_current = set(graph.nodes())
             for u, v in next_graph.edges():
-                if (u, v) not in prev_edges and (v, u) not in prev_edges:
-                    new_edges.append((u, v))
+                # Only use edges where both nodes exist in current graph
+                if u in nodes_current and v in nodes_current:
+                    if (u, v) not in prev_edges and (v, u) not in prev_edges:
+                        # Remap to current graph's indices
+                        new_edges.append((node_to_idx[u], node_to_idx[v]))
             
             # Negative edges
             neg_edges = []
@@ -321,12 +326,14 @@ class GCN_MA_Trainer:
         with torch.no_grad():
             Z, _ = self.model.forward_single_snapshot(adj, features, update_weights=False)
             
-        # Positive edges
+        # Positive edges - only consider edges where both endpoints exist in current graph
         pos_edges = []
         prev_edges = set(graph.edges())
+        nodes_current = set(graph.nodes())
         for u, v in next_graph.edges():
-            if (u, v) not in prev_edges and (v, u) not in prev_edges:
-                pos_edges.append((u, v))
+            if u in nodes_current and v in nodes_current:
+                if (u, v) not in prev_edges and (v, u) not in prev_edges:
+                    pos_edges.append((node_to_idx[u], node_to_idx[v]))
         
         # Negative edges
         neg_edges = []
